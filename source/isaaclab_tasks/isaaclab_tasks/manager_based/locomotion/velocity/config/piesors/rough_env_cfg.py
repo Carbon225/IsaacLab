@@ -42,10 +42,10 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
 
         self.events.push_robot.params["velocity_range"] = {"x": (-0.1, 0.1), "y": (-0.1, 0.1)}
 
-        # self.observations.policy.base_lin_vel = None
-        # self.observations.policy.base_ang_vel = None
-        # self.observations.policy.projected_gravity = None
-        # self.observations.policy.joint_vel = None
+        self.observations.policy.base_lin_vel = None
+        self.observations.policy.base_ang_vel = None
+        self.observations.policy.projected_gravity = None
+        self.observations.policy.joint_vel = None
 
         self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
@@ -54,14 +54,14 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         # self.rewards.track_lin_vel_xy_exp.weight = 40.0
         # self.rewards.track_lin_vel_xy_exp.params["std"] = 0.02
 
-        # self.rewards.base_height_l2 = RewTerm(
-        #     func=mdp.base_height_l2,
-        #     weight=-200.0,
-        #     params={
-        #         "asset_cfg": SceneEntityCfg("robot", body_names="base"),
-        #         "target_height": 0.2,
-        #     },
-        # )
+        self.rewards.base_height_l2 = RewTerm(
+            func=mdp.base_height_l2,
+            weight=-100.0,
+            params={
+                "asset_cfg": SceneEntityCfg("robot", body_names="base"),
+                "target_height": 0.18,
+            },
+        )
 
         # self.rewards.feet_slide = RewTerm(
         #     func=mdp.feet_slide,
@@ -72,15 +72,15 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         #     },
         # )
 
-        # self.rewards.stand_still_joint_deviation_l1 = RewTerm(
-        #     func=mdp.stand_still_joint_deviation_l1,
-        #     weight=-1.0,
-        #     params={
-        #         "command_name": "base_velocity",
-        #         "command_threshold": 0.01,
-        #         "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
-        #     },
-        # )
+        self.rewards.stand_still_joint_deviation_l1 = RewTerm(
+            func=mdp.stand_still_joint_deviation_l1,
+            weight=-0.1,
+            params={
+                "command_name": "base_velocity",
+                "command_threshold": 0.05,
+                "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
+            },
+        )
 
         # self.actions.joint_pos.scale = 0.5
 
