@@ -45,6 +45,7 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.observations.policy.base_lin_vel = None
         self.observations.policy.base_ang_vel = None
         self.observations.policy.projected_gravity = None
+        # self.observations.policy.joint_pos = None
         self.observations.policy.joint_vel = None
 
         self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
@@ -86,6 +87,9 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
 
         # self.events.base_external_force_torque = None
         # self.events.push_robot = None
+
+        self.scene.height_scanner = None
+        self.observations.policy.height_scan = None
 
 
 @configclass
