@@ -24,10 +24,10 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.scene.num_envs = 2**15
         self.scene.env_spacing = 2.0
 
-        self.events.add_base_mass.params["mass_distribution_params"] = (0.9, 1.1)
+        self.events.add_base_mass.params["mass_distribution_params"] = (0.7, 1.3)
         self.events.add_base_mass.params["operation"] = "scale"
 
-        self.events.base_com.params["com_range"] = {"x": (-0.01, 0.01), "y": (-0.01, 0.01), "z": (-0.01, 0.01)}
+        self.events.base_com.params["com_range"] = {"x": (-0.05, 0.05), "y": (-0.01, 0.01), "z": (-0.01, 0.01)}
 
         self.events.reset_base.params["velocity_range"] = {
             "x": (0.0, 0.0),
@@ -46,7 +46,7 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
         self.observations.policy.base_ang_vel = None
         self.observations.policy.projected_gravity = None
         # self.observations.policy.joint_pos = None
-        self.observations.policy.joint_vel = None
+        # self.observations.policy.joint_vel = None
 
         self.commands.base_velocity.ranges.lin_vel_x = (-1.0, 1.0)
         self.commands.base_velocity.ranges.lin_vel_y = (-0.5, 0.5)
@@ -64,14 +64,14 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
             },
         )
 
-        # self.rewards.feet_slide = RewTerm(
-        #     func=mdp.feet_slide,
-        #     weight=-0.1,
-        #     params={
-        #         "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*FOOT"),
-        #         "asset_cfg": SceneEntityCfg("robot", body_names=".*FOOT"),
-        #     },
-        # )
+        self.rewards.feet_slide = RewTerm(
+            func=mdp.feet_slide,
+            weight=-0.5,
+            params={
+                "sensor_cfg": SceneEntityCfg("contact_forces", body_names=".*FOOT"),
+                "asset_cfg": SceneEntityCfg("robot", body_names=".*FOOT"),
+            },
+        )
 
         self.rewards.stand_still_joint_deviation_l1 = RewTerm(
             func=mdp.stand_still_joint_deviation_l1,
@@ -82,6 +82,8 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
                 "asset_cfg": SceneEntityCfg("robot", joint_names=".*"),
             },
         )
+
+        self.rewards.dof_pos_limits.weight = -1.0
 
         # self.actions.joint_pos.scale = 0.5
 

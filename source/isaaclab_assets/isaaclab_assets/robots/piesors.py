@@ -18,13 +18,17 @@ from isaaclab.assets.articulation import ArticulationCfg
 # Configuration - Actuators.
 ##
 
+TAU_MAX = 1.61
+V_MAX = 5.817764173314432
+
 POWERHD_SERVO_ACTUATOR_CFG = DCMotorCfg(
     joint_names_expr=[".*"],
-    saturation_effort=16.0,
-    effort_limit=16.0,
-    velocity_limit=7.5,
-    stiffness={".*": 40.0},
-    damping={".*": 5.0},
+    saturation_effort=2.0,
+    effort_limit=TAU_MAX,
+    velocity_limit=V_MAX,
+    stiffness={".*": 3.0},
+    damping={".*": TAU_MAX / V_MAX},
+    armature={".*": 0.01},
 )
 """Configuration for PowerHD servo with DC actuator model."""
 
@@ -49,7 +53,7 @@ PIESORS_CFG = ArticulationCfg(
         articulation_props=sim_utils.ArticulationRootPropertiesCfg(
             enabled_self_collisions=False, solver_position_iteration_count=4, solver_velocity_iteration_count=0
         ),
-        collision_props=sim_utils.CollisionPropertiesCfg(contact_offset=0.002, rest_offset=0.0),
+        collision_props=sim_utils.CollisionPropertiesCfg(contact_offset=0.01, rest_offset=0.0),
     ),
     init_state=ArticulationCfg.InitialStateCfg(
         pos=(0.0, 0.0, 0.2),
@@ -60,6 +64,6 @@ PIESORS_CFG = ArticulationCfg(
         },
     ),
     actuators={"legs": POWERHD_SERVO_ACTUATOR_CFG},
-    soft_joint_pos_limit_factor=0.95,
+    soft_joint_pos_limit_factor=0.9,
 )
 """Configuration of Piesors robot."""
