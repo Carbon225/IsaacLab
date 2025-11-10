@@ -23,12 +23,12 @@ V_MAX = 5.817764173314432
 
 POWERHD_SERVO_ACTUATOR_CFG = DCMotorCfg(
     joint_names_expr=[".*"],
-    saturation_effort=2.0,
+    saturation_effort=1.7,
     effort_limit=TAU_MAX,
     velocity_limit=V_MAX,
-    stiffness={".*": 3.0},
+    stiffness={".*": 4.2},
     damping={".*": TAU_MAX / V_MAX},
-    armature={".*": 0.01},
+    armature={".*": 0.0062},
 )
 """Configuration for PowerHD servo with DC actuator model."""
 
@@ -39,7 +39,7 @@ POWERHD_SERVO_ACTUATOR_CFG = DCMotorCfg(
 
 PIESORS_CFG = ArticulationCfg(
     spawn=sim_utils.UsdFileCfg(
-        usd_path="/home/carbon/projects/piesors-learn/envs/v1/isaac/piesors_simple.usd",
+        usd_path="/home/carbon/projects/piesors-learn/urdf/piesors/piesors.usd",
         activate_contact_sensors=True,
         rigid_props=sim_utils.RigidBodyPropertiesCfg(
             disable_gravity=False,

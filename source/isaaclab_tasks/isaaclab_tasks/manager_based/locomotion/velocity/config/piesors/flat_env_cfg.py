@@ -16,7 +16,9 @@ class PiesorsFlatEnvCfg(PiesorsRoughEnvCfg):
 
         # override rewards
         self.rewards.flat_orientation_l2.weight = -5.0
-        self.rewards.dof_torques_l2.weight = -2.5e-5
+        self.rewards.dof_torques_l2.weight = -1e-4
+        self.rewards.dof_acc_l2.weight = -1e-6
+        self.rewards.action_rate_l2.weight = -0.05
         self.rewards.feet_air_time.weight = 0.5
         # change terrain to flat
         self.scene.terrain.terrain_type = "plane"

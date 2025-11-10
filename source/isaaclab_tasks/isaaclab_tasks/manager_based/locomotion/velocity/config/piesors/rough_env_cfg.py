@@ -83,6 +83,12 @@ class PiesorsRoughEnvCfg(LocomotionVelocityRoughEnvCfg):
             },
         )
 
+        self.rewards.dof_vel_l2 = RewTerm(
+            func=mdp.joint_vel_l2,
+            weight=-0.001,
+            params={"asset_cfg": SceneEntityCfg("robot", joint_names=".*")},
+        )
+
         self.rewards.dof_pos_limits.weight = -1.0
 
         # self.actions.joint_pos.scale = 0.5
